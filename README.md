@@ -2,11 +2,11 @@
 
 # 仓库说明
 
-本仓库，搭建了一个调用SCIP可执行库的c++的一个解决方案（solution）。
-SCIP版本：8.0.3。
-同时，它包含一些求解器SCIP的cpp API示中的例子。是我学习使用的，它们相比于官网的demo、例子更加简洁，更加方便上手cpp API的用法。
-关于“调用SCIP C++接口，viusal studio项目工程搭建”的步骤，可以参考下面bilibili视频教程：
-https://www.bilibili.com/video/BV1PX4y1Q77C/
+本仓库，搭建了一个调用SCIP可执行库的c++的一个解决方案（solution）。  
+SCIP版本：8.0.3。  
+同时，它包含一些求解器SCIP的cpp API示中的例子。是我学习使用的，它们相比于官网的demo、例子更加简洁，更加方便上手cpp API的用法。  
+关于“调用SCIP C++接口，viusal studio项目工程搭建”的步骤，可以参考下面bilibili视频教程：  
+https://www.bilibili.com/video/BV1PX4y1Q77C/  
 
 # 代码
 

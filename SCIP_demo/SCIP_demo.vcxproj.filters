@@ -18,10 +18,10 @@
     <ClCompile Include="hello_world.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source.cpp">
+    <ClCompile Include="quadratic_nonlinear_constraint_demo_01.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source1.cpp">
+    <ClCompile Include="quadratic_nonlinear_constraint_demo_02.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

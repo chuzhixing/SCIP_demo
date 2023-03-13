@@ -24,5 +24,14 @@
     <ClCompile Include="quadratic_nonlinear_constraint_demo_02.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="brachistochrone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="demo_cons_with_sqrt_and_sum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
   </ItemGroup>
 </Project>

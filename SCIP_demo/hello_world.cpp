@@ -27,6 +27,7 @@ int main_hello_world(void) {
 	SCIPsetRealParam(_scip, "limits/gap", 0.00001);
 	SCIPsetRealParam(_scip, "limits/time", 10);
 
+	//  min (2*x + 3*y)
 	//--添加变量(（create and add variables to the problem, create obj function at the same time)
 	// 在设置目标函数的变量时，同时设置了变量的系数，同时设置了变量的上下界范围 
 	SCIP_VAR* xVar = nullptr;
@@ -41,7 +42,7 @@ int main_hello_world(void) {
 	// SCIPchgVarObj(_scip, xVar, 1);
 
 	//--添加约束(add the constraint)
-	SCIP_CONS* zCons;
+	SCIP_CONS* zCons; // 2x+3y  >=7  ==>    7=<2*x+3Y <= +inf
 	SCIPcreateConsBasicLinear(_scip, &zCons, "z_cons", 0, NULL, NULL, 7, SCIPinfinity(_scip));
 	SCIPaddCoefLinear(_scip, zCons, xVar, 2);
 	SCIPaddCoefLinear(_scip, zCons, yVar, 3);
@@ -49,7 +50,7 @@ int main_hello_world(void) {
 	SCIPreleaseCons(_scip, &zCons);
 
 	// 打印模型  (write model to disk)
-	SCIPwriteOrigProblem(_scip, "D:/zhusc/work/op/test0.lp", "cip", FALSE);
+	SCIPwriteOrigProblem(_scip, "D:/test0.lp", "cip", FALSE);
 
 	SCIPsolve(_scip);
 

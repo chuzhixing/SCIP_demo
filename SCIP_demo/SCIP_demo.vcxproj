@@ -159,6 +159,7 @@
     <ClCompile Include="hello_world.cpp" />
     <ClCompile Include="quadratic_nonlinear_constraint_demo_01.cpp" />
     <ClCompile Include="quadratic_nonlinear_constraint_demo_02.cpp" />
+    <ClCompile Include="cons_with_sqrt_and_sum_and_quadratic_nonlinear_demo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />

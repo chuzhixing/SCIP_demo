@@ -2,13 +2,13 @@
 	这是一个示例，把SCIP用作可调用库时，演示了约束条件中带有根号，对应的API调用的例子
 	例子来源：
 	目标函数说明：
-	obj min t
-	s.t. t * [(1 - y_{i+1})^0.5 + (1 - y_{i})^0.5] >= 5
+	obj min t_i
+	s.t. t_i * [(1 - y_{i+1})^0.5 + (1 - y_{i})^0.5] >= 5
 */
 
 //tex:
-// $$ min\ t $$
-// $$ s.t.\ t \times[\sqrt{ 1 - y_{i + 1} } +\sqrt{ 1 - y_{i} }] \ge 5 $$
+// $$ min\ t_i $$
+// $$ s.t.\ t_i \times[\sqrt{ 1 - y_{i + 1} } +\sqrt{ 1 - y_{i} }] \ge 5 $$
 #include <iostream>
 
 #include <scip/scipdefplugins.h>
@@ -34,9 +34,9 @@ int main(void) {
 
 	//--添加变量(（create and add variables to the problem, create obj function at the same time)
 	// 在设置目标函数的变量时，同时设置了变量的系数，同时设置了变量的上下界范围 
-	SCIP_VAR* t_var = nullptr;
-	SCIPcreateVarBasic(_scip, &t_var, "_t", 0, SCIPinfinity(_scip), 1.0, SCIP_VARTYPE_CONTINUOUS);
-	SCIPaddVar(_scip, t_var);
+	SCIP_VAR* t_i_var = nullptr;
+	SCIPcreateVarBasic(_scip, &t_i_var, "_t_i", 0, SCIPinfinity(_scip), 1.0, SCIP_VARTYPE_CONTINUOUS);
+	SCIPaddVar(_scip, t_i_var);
 
 	SCIP_VAR* y_ip1_var = nullptr;
 	SCIPcreateVarBasic(_scip, &y_ip1_var, "_y_ip1", 0, 1, 0, SCIP_VARTYPE_CONTINUOUS);
@@ -54,7 +54,7 @@ int main(void) {
 	/* create expressions for variables that are used in nonlinear constraint */
 	SCIPcreateExprVar(_scip, &yplusexpr, y_ip1_var, NULL, NULL);
 	SCIPcreateExprVar(_scip, &yexpr, y_i_var, NULL, NULL);
-	SCIPcreateExprVar(_scip, &texpr, t_var, NULL, NULL);
+	SCIPcreateExprVar(_scip, &texpr, t_i_var, NULL, NULL);
 
 	// intermediary expressions 
 	// expr1: 1 - y[i+1]
@@ -94,7 +94,7 @@ int main(void) {
 	exprs[0] = expr5; coeffs[0] = 1.0;
 	exprs[1] = expr6; coeffs[1] = 1.0;
 	SCIPcreateExprSum(_scip, &expr7, 2, exprs, coeffs, 0.0, NULL, NULL);
-
+	
 	/* create the constraint expr7 >= 0, add to the problem, and release it */
 	SCIP_CONS* cons;
 	SCIPcreateConsBasicNonlinear(_scip, &cons, "cons_name", expr7, 5, SCIPinfinity(_scip));
@@ -119,7 +119,7 @@ int main(void) {
 	SCIPsolve(_scip);
 
 	//--取最优解(get best solution)
-	double t_val = SCIPgetSolVal(_scip, SCIPgetBestSol(_scip), t_var);
+	double t_val = SCIPgetSolVal(_scip, SCIPgetBestSol(_scip), t_i_var);
 	double y_ip1_val = SCIPgetSolVal(_scip, SCIPgetBestSol(_scip), y_ip1_var);
 	double y_i_val = SCIPgetSolVal(_scip, SCIPgetBestSol(_scip), y_i_var);
 
@@ -128,7 +128,7 @@ int main(void) {
 	std::cout << "find best solution, y_i_val: " << y_i_val << std::endl;
 
 	//--release resource
-	SCIPreleaseVar(_scip, &t_var);
+	SCIPreleaseVar(_scip, &t_i_var);
 	SCIPreleaseVar(_scip, &y_ip1_var);
 	SCIPreleaseVar(_scip, &y_i_var);
 	SCIPfree(&_scip);

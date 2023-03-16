@@ -30,6 +30,9 @@
     <ClCompile Include="demo_cons_with_sqrt_and_sum.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cons_with_sqrt_and_sum_and_quadratic_nonlinear_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />

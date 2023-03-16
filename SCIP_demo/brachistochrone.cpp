@@ -70,16 +70,16 @@
 #define Y_START  1.0
 #define Y_END    0.0
 #define X_START  0.0
-#define X_END   10.0
+#define X_END   1.0
 
 /** sets up problem */
 static
 SCIP_RETCODE setupProblem(
-	SCIP* scip,               /**< SCIP data structure */
+	SCIP*                 scip,               /**< SCIP data structure */
 	unsigned int          n,                  /**< number of points for discretization */
-	SCIP_Real* coord,              /**< array containing [y(0), y(N), x(0), x(N)] */
-	SCIP_VAR*** xvars,              /**< buffer to store pointer to x variables array */
-	SCIP_VAR*** yvars               /**< buffer to store pointer to y variables array */
+	SCIP_Real*            coord,              /**< array containing [y(0), y(N), x(0), x(N)] */
+	SCIP_VAR***           xvars,              /**< buffer to store pointer to x variables array */
+	SCIP_VAR***           yvars               /**< buffer to store pointer to y variables array */
 ) {
 	/* variables:
 	 * t[i] i=0..N-1, such that: value function=sum t[i]
@@ -213,7 +213,7 @@ SCIP_RETCODE setupProblem(
 			 * expr2: 1 - y[i]
 			 * expr3: sqrt(1 - y[i+1])
 			 * expr4: sqrt(1 - y[i])
-			 * expr5: t[i] * sqrt(1 - y[i+1])mmmmmmmm
+			 * expr5: t[i] * sqrt(1 - y[i+1])
 			 * expr6: t[i] * sqrt(1 - y[i])
 			 * expr7: t[i] * sqrt(1 - y[i+1]) + t[i] * sqrt(1 - y[i]) - v[i]
 			 */
@@ -263,7 +263,8 @@ SCIP_RETCODE setupProblem(
 			quadvars1[6] = v[i];   quadvars2[6] = v[i];   quadcoefs[6] = -1.0;
 
 			SCIPsnprintf(consname, SCIP_MAXSTRLEN, "steplength(%d)", i);
-			SCIP_CALL(SCIPcreateConsQuadraticNonlinear(scip, &cons, consname, 0, NULL, NULL, 7, quadvars1, quadvars2, quadcoefs, -SCIPinfinity(scip), 0.0, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE));
+			// SCIP_CALL(SCIPcreateConsQuadraticNonlinear(scip, &cons, consname, 0, NULL, NULL, 7, quadvars1, quadvars2, quadcoefs, -SCIPinfinity(scip), 0.0, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE));
+			SCIP_CALL(SCIPcreateConsQuadraticNonlinear(scip, &cons, consname, 0, NULL, NULL, 7, quadvars1, quadvars2, quadcoefs, 0.0, 0.0, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE));
 
 			/* add the constraint to the problem and forget it */
 			SCIP_CALL(SCIPaddCons(scip, cons));
@@ -296,11 +297,11 @@ SCIP_RETCODE setupProblem(
 /** plots solution by use of gnuplot */
 static
 void visualizeSolutionGnuplot(
-	SCIP* scip,               /**< SCIP data structure */
-	SCIP_SOL* sol,                /**< solution to plot */
+	SCIP*                 scip,               /**< SCIP data structure */
+	SCIP_SOL*             sol,                /**< solution to plot */
 	unsigned int          n,                  /**< number of points for discretization */
-	SCIP_VAR** x,                  /**< x coordinates */
-	SCIP_VAR** y                   /**< y coordinates */
+	SCIP_VAR**            x,                  /**< x coordinates */
+	SCIP_VAR**            y                   /**< y coordinates */
 ) {
 #if _POSIX_C_SOURCE < 2
 	SCIPinfoMessage(scip, NULL, "No POSIX version 2. Try http://distrowatch.com/.");
@@ -330,7 +331,7 @@ void visualizeSolutionGnuplot(
 static
 SCIP_RETCODE runBrachistochrone(
 	unsigned int          n,                  /**< number of points for discretization */
-	SCIP_Real* coord               /**< array containing [y(0), y(N), x(0), x(N)] */
+	SCIP_Real*            coord               /**< array containing [y(0), y(N), x(0), x(N)] */
 ) {
 	SCIP* scip;
 	SCIP_VAR** y;
@@ -386,7 +387,7 @@ SCIP_RETCODE runBrachistochrone(
 // _brachistochrone
 int main_brachistochrone(
 	int                   argc,               /**< number of arguments from the shell */
-	char** argv                /**< arguments: number of points and end coordinates y(N), x(N)*/
+	char**                argv                /**< arguments: number of points and end coordinates y(N), x(N)*/
 ) {
 	SCIP_RETCODE retcode;
 
@@ -396,9 +397,9 @@ int main_brachistochrone(
 
 	/* change some parameters if given as arguments */
 	if (argc == 4 || argc == 2) {
-		char* end1 = NULL;
-		char* end2 = NULL;
-		char* end3 = NULL;
+		char *end1 = NULL;
+		char *end2 = NULL;
+		char *end3 = NULL;
 
 		n = strtol(argv[1], &end1, 10);
 		if (argc == 4) {
@@ -431,6 +432,5 @@ int main_brachistochrone(
 	}
 
 	system("pause");
-
 	return EXIT_SUCCESS;
 }

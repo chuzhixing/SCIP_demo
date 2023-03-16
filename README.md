@@ -6,7 +6,8 @@
 SCIP版本：8.0.3。  
 同时，它包含一些求解器SCIP的cpp API示中的例子。是我学习使用的，它们相比于官网的demo、例子更加简洁，更加方便上手cpp API的用法。  
 关于“调用SCIP C++接口，viusal studio项目工程搭建”的步骤，可以参考下面bilibili视频教程：  
-https://www.bilibili.com/video/BV1PX4y1Q77C/  
+https://www.bilibili.com/video/BV1PX4y1Q77C/    
+SCIP C++ API入门级教程合集B站观看入口：https://space.bilibili.com/412241271/channel/seriesdetail?sid=3100320  
 
 # 代码
 
@@ -56,4 +57,17 @@ s.t.
     0< t <+inf
     0 =< y_{i+1} <= 1
     0 =< y_{i} <= 1
+```
+
+5 SCIP_demo/cons_with_sqrt_and_sum_and_quadratic_nonlinear_demo
+它是一个约束项中，带有根号函数的例子，演示约束项中带有函数的情况（比如根号函数、sin函数、绝对值函数）的SCIP C++ API的用法。目标函数说明如下：  
+目标函数如下所示
+```
+obj min t_i 
+s.t. t_i * [sqrt{(1 - y_{i+1})} + sqrt{(1 - y_{i})}] - sqrt{(x_{i+1} - x_{i})^2 + (y_{i+1} - y_{i})^2} >= 0 
+	0 = < t_i  
+	0 = < y_{ i + 1 } <= 1 
+	0 = < y_{ i } <= 1  
+	0 = < x_{ i + 1 } <= 1  
+	0 = < x_{ i } <= 1  
 ```

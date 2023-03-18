@@ -125,6 +125,12 @@ int main_cons_with_sqrt_and_sum_and_quadratic_nonlinear_demo(void) {
 	exprs[1] = expr6; coeffs[1] = 1.0;
 	exprs[2] = vexpr; coeffs[2] = 1.0;
 	SCIPcreateExprSum(_scip, &expr7, 3, exprs, coeffs, 0.0, NULL, NULL);
+	// SCIPcreateExprSum、SCIPcreateExprProduct、SCIPcreateExprPow、SCIPcreateExprAbs、SCIPcreateExprSin、SCIPcreateExprCos、SCIPcreateExprLog、SCIPcreateExprSignpower、SCIPcreateExprQuadratic、SCIPcreateExprMonomial
+
+	
+	
+	
+
 
 	/* create the constraint expr7 >= 0, add to the problem, and release it */
 	SCIP_CONS* cons;
